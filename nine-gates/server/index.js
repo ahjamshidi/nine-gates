@@ -2,6 +2,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const jobController = require('./controllers/jobController');
+const cors = require('cors');
 
 // Connect to the MongoDB database
 mongoose.connect('mongodb://localhost:27017/jobSkillsDB')
@@ -9,6 +10,8 @@ mongoose.connect('mongodb://localhost:27017/jobSkillsDB')
   .catch(err => console.error('Database connection error: ', err));
 
 const app = express();
+
+app.use(cors());
 
 // Set up your routes
 app.get('/search/:job', jobController.getJobSkills);

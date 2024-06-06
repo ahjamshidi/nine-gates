@@ -7,7 +7,19 @@ exports.getJobSkills = async (req, res) => {
   try {
     const response = await axios.get(`https://ec.europa.eu/esco/api/search?language=en&type=occupation&text=${job}`);
     const results = response.data._embedded.results;
+   // console.log('***************here is Results: ',results)
     const firstUri = results.length > 0 ? results[0].uri : null;
+
+    // let firstUri = null;
+    // for (let i = 0; i < results.length; i++) {
+    //   if (results[i].title.toLowerCase() === job.toLowerCase()) {
+    //     firstUri = results[i].uri;
+    //     break;
+    //   }
+    // }
+
+    //console.log('this is the URIO')
+
     if (firstUri) {
       const encodedUri = encodeURIComponent(firstUri);
       const skillsResponse = await axios.get(`https://ec.europa.eu/esco/api/resource/occupation?uris=${encodedUri}&language=en`);
@@ -18,7 +30,8 @@ exports.getJobSkills = async (req, res) => {
        // Save the job data to the database
        const jobData = new Job({
         jobTitle: job,
-        essentialSkills: skillTitles
+        essentialSkills: skillTitles,
+        firstUri: firstUri
       });
       await jobData.save();
 
