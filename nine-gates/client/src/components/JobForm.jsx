@@ -1,36 +1,25 @@
-// import React, { useState } from 'react';
-
-// const JobForm = ({ onSearch }) => {
-//   const [job, setJob] = useState('');
-
-//   const handleSubmit = (event) => {
-//     event.preventDefault();
-//     onSearch(job);
-//   };
-
-//   return (
-//     <form onSubmit={handleSubmit}>
-//       <input type="text" value={job} onChange={(e) => setJob(e.target.value)} required />
-//       <button type="submit">Search</button>
-//     </form>
-//   );
-// };
-
-// export default JobForm;
-
 import React, { useState } from 'react';
 
-const JobForm = ({ onSearch }) => {
-  const [job, setJob] = useState('');
+const JobForm = ({ onSearchCurrentJob, onSearchDesiredJob }) => {
+  const [currentJob, setCurrentJob] = useState('');
+  const [desiredJob, setDesiredJob] = useState('');
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    onSearch(job);
+    onSearchCurrentJob(currentJob);
+    onSearchDesiredJob(desiredJob);
   };
 
   return (
     <form onSubmit={handleSubmit}>
-      <input type="text" value={job} onChange={(e) => setJob(e.target.value)} required />
+      <label>
+        Current Job:
+        <input type="text" value={currentJob} onChange={(e) => setCurrentJob(e.target.value)} required />
+      </label>
+      <label>
+        Desired Job:
+        <input type="text" value={desiredJob} onChange={(e) => setDesiredJob(e.target.value)} required />
+      </label>
       <button type="submit">Search</button>
     </form>
   );
