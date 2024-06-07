@@ -14,7 +14,12 @@ const app = express();
 app.use(cors());
 
 // Set up your routes
-app.get('/search/:job', jobController.getJobSkills);
+// app.get('/search/:job', jobController.getJobSkills);
+
+// Set up your routes
+app.get('/currentJob/:jobTitle', jobController.getCurrentJob);
+app.get('/desiredJob/:jobTitle', jobController.getDesiredJob);
+
 
 // Start the server
 const port = process.env.PORT || 5000;
