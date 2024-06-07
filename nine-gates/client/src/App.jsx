@@ -2,6 +2,7 @@ import { useState } from 'react'
 
 import JobForm from './components/JobForm'
 import SkillsList from './components/SkillsList'
+import MissingSkills from './components/MissingSkills'
 
 import './App.css'
 
@@ -30,6 +31,7 @@ const App = () => {
       <div className="skills-lists">
         <SkillsList skills={currentJobSkills} />
         <SkillsList skills={desiredJobSkills} />
+        <MissingSkills currentSkills={currentJobSkills} desiredSkills={desiredJobSkills} />
       </div>
     </div>
   );
