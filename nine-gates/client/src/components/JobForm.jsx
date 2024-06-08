@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { TextField, Button } from '@mui/material';
+import '../styles/JobForm.css';
 
 const JobForm = ({ onSearchCurrentJob, onSearchDesiredJob }) => {
   const [currentJob, setCurrentJob] = useState('');
@@ -18,8 +19,10 @@ const JobForm = ({ onSearchCurrentJob, onSearchDesiredJob }) => {
         value={currentJob}
         onChange={(e) => setCurrentJob(e.target.value)}
         required
+        className="input-form"
       />
       <TextField
+        className="input-form"
         label="Desired Job"
         value={desiredJob}
         onChange={(e) => setDesiredJob(e.target.value)}

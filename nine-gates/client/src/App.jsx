@@ -26,7 +26,7 @@ const App = () => {
   return (
     <div className="App">
       <Header />
-      <div className="job-forms">
+      <div>
         <JobForm onSearchCurrentJob={fetchCurrentJobSkills} onSearchDesiredJob={fetchDesiredJobSkills} />
       </div>
       <div className="skills-lists">
