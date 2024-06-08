@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { TextField, Button } from '@mui/material';
 
 const JobForm = ({ onSearchCurrentJob, onSearchDesiredJob }) => {
   const [currentJob, setCurrentJob] = useState('');
@@ -12,15 +13,21 @@ const JobForm = ({ onSearchCurrentJob, onSearchDesiredJob }) => {
 
   return (
     <form onSubmit={handleSubmit}>
-      <label>
-        Current Job:
-        <input type="text" value={currentJob} onChange={(e) => setCurrentJob(e.target.value)} required />
-      </label>
-      <label>
-        Desired Job:
-        <input type="text" value={desiredJob} onChange={(e) => setDesiredJob(e.target.value)} required />
-      </label>
-      <button type="submit">Search</button>
+      <TextField
+        label="Current Job"
+        value={currentJob}
+        onChange={(e) => setCurrentJob(e.target.value)}
+        required
+      />
+      <TextField
+        label="Desired Job"
+        value={desiredJob}
+        onChange={(e) => setDesiredJob(e.target.value)}
+        required
+      />
+      <Button type="submit" variant="contained" color="primary">
+        Search
+      </Button>
     </form>
   );
 };
