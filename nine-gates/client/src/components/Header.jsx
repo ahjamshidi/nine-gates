@@ -10,7 +10,7 @@ const Header = () => {
       <Toolbar>
         <Typography variant="h6" component="div">
         The path to a new job isn’t always clear. There are jobs that are a great fit but might seem out of reach, and others you may not even know you have the skills for.
-        We’re now putting the power of the ESCO data in your hands: uncover potential career paths and see how your skills match to real job titles.
+        We’re now putting the power of data in your hands: uncover potential career paths and see what is required to get your desired Job.
         </Typography>
       </Toolbar>
     </AppBar>
