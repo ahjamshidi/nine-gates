@@ -5,6 +5,7 @@ import SkillsList from './components/SkillsList'
 import MissingSkills from './components/MissingSkills'
 
 import './App.css'
+import Header from './components/Header'
 
 const App = () => {
   const [currentJobSkills, setCurrentJobSkills] = useState([]);
@@ -24,7 +25,7 @@ const App = () => {
 
   return (
     <div className="App">
-      <h1>Job Skills Finder</h1>
+      <Header />
       <div className="job-forms">
         <JobForm onSearchCurrentJob={fetchCurrentJobSkills} onSearchDesiredJob={fetchDesiredJobSkills} />
       </div>
