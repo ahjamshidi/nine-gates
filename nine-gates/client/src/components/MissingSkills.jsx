@@ -7,7 +7,6 @@ const MissingSkills = ({ currentSkills, desiredSkills }) => {
   return (
     missingSkills.length > 0 && (
       <div>
-        <h2>Missing Skills</h2>
         <ul>
           {missingSkills.map((skill, index) => (
             <li key={index} style={{ '--i': index }}>{skill}</li>

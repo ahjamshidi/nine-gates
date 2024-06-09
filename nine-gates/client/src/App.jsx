@@ -15,7 +15,7 @@ const App = () => {
       const skills = await fetchJobSkills('currentJob', currentJob);
       if (Array.isArray(skills)) {
         setCurrentJobSkills(skills);
-        setError(null); // clear any previous error
+        setError(null);
       } else {
         setError('There are no skills matching your Job Title, sorry.');
       }
@@ -29,13 +29,20 @@ const App = () => {
       const skills = await fetchJobSkills('desiredJob', desiredJob);
       if (Array.isArray(skills)) {
         setDesiredJobSkills(skills);
-        setError(null); // clear any previous error
+        setError(null);
       } else {
         setError('There are no skills matching your Job Title, sorry.');
       }
     } catch (err) {
       setError('An error occurred while fetching skills.');
     }
+  };
+
+  const calculateCommonSkills = () => {
+    const currentSkillsTitles = currentJobSkills.map(skill => skill.title);
+    const desiredSkillsTitles = desiredJobSkills.map(skill => skill.title);
+    const commonSkills = currentSkillsTitles.filter(skill => desiredSkillsTitles.includes(skill));
+    return commonSkills.length;
   };
 
   return (
@@ -45,6 +52,11 @@ const App = () => {
         <JobForm onSearchCurrentJob={handleFetchCurrentJobSkills} onSearchDesiredJob={handleFetchDesiredJobSkills} />
       </div>
       {error && <div className="error-message">{error}</div>}
+      {currentJobSkills.length > 0 && desiredJobSkills.length > 0 && (
+      <div className="common-skills">
+        Congratulations! You currently hold {calculateCommonSkills()} skills in your current skill set that are also present in your desired job. Just focus on the following Missing Skills:
+      </div>
+    )}
       <div className="skills-lists">
         <MissingSkills currentSkills={currentJobSkills} desiredSkills={desiredJobSkills} />
       </div>
