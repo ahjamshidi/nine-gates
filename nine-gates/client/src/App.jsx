@@ -1,41 +1,67 @@
 import { useState } from 'react'
-
+import { fetchJobSkills } from './helpers/api';
 import JobForm from './components/JobForm'
-import SkillsList from './components/SkillsList'
 import MissingSkills from './components/MissingSkills'
-
 import './App.css'
 import Header from './components/Header'
 
 const App = () => {
   const [currentJobSkills, setCurrentJobSkills] = useState([]);
   const [desiredJobSkills, setDesiredJobSkills] = useState([]);
+  const [error, setError] = useState(null);
 
-  const fetchCurrentJobSkills = async (currentJob) => {
-    const response = await fetch(`http://localhost:5000/currentJob/${currentJob}`);
-    const skills = await response.json();
-    setCurrentJobSkills(skills);
+  const handleFetchCurrentJobSkills = async (currentJob) => {
+    try {
+      const skills = await fetchJobSkills('currentJob', currentJob);
+      if (Array.isArray(skills)) {
+        setCurrentJobSkills(skills);
+        setError(null);
+      } else {
+        setError('There are no skills matching your Job Title, sorry.');
+      }
+    } catch (err) {
+      setError('An error occurred while fetching skills.');
+    }
   };
 
-  const fetchDesiredJobSkills = async (desiredJob) => {
-    const response = await fetch(`http://localhost:5000/desiredJob/${desiredJob}`);
-    const skills = await response.json();
-    setDesiredJobSkills(skills);
+  const handleFetchDesiredJobSkills = async (desiredJob) => {
+    try {
+      const skills = await fetchJobSkills('desiredJob', desiredJob);
+      if (Array.isArray(skills)) {
+        setDesiredJobSkills(skills);
+        setError(null);
+      } else {
+        setError('There are no skills matching your Job Title, sorry.');
+      }
+    } catch (err) {
+      setError('An error occurred while fetching skills.');
+    }
+  };
+
+  const calculateCommonSkills = () => {
+    const currentSkillsTitles = currentJobSkills.map(skill => skill.title);
+    const desiredSkillsTitles = desiredJobSkills.map(skill => skill.title);
+    const commonSkills = currentSkillsTitles.filter(skill => desiredSkillsTitles.includes(skill));
+    return commonSkills.length;
   };
 
   return (
     <div className="App">
       <Header />
-      <div className="job-forms">
-        <JobForm onSearchCurrentJob={fetchCurrentJobSkills} onSearchDesiredJob={fetchDesiredJobSkills} />
+      <div>
+        <JobForm onSearchCurrentJob={handleFetchCurrentJobSkills} onSearchDesiredJob={handleFetchDesiredJobSkills} />
       </div>
+      {error && <div className="error-message">{error}</div>}
+      {currentJobSkills.length > 0 && desiredJobSkills.length > 0 && (
+      <div className="common-skills">
+        Congratulations! You currently hold {calculateCommonSkills()} skills in your current skill set that are also present in your desired job. Just focus on the following Missing Skills:
+      </div>
+    )}
       <div className="skills-lists">
-        <SkillsList skills={currentJobSkills} />
-        <SkillsList skills={desiredJobSkills} />
         <MissingSkills currentSkills={currentJobSkills} desiredSkills={desiredJobSkills} />
       </div>
     </div>
   );
 };
 
-export default App
+export default App;
