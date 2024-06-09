@@ -40,3 +40,13 @@
 .read-the-docs {
   color: #888;
 }
+
+.job-forms {
+  display: flex;
+  justify-content: space-between;
+}
+
+.skills-lists {
+  display: flex;
+  justify-content: space-between;
+}

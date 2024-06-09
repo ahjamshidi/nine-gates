@@ -1,17 +1,33 @@
 import React, { useState } from 'react';
+import { TextField, Button } from '@mui/material';
 
-const JobForm = ({ onSearch }) => {
-  const [job, setJob] = useState('');
+const JobForm = ({ onSearchCurrentJob, onSearchDesiredJob }) => {
+  const [currentJob, setCurrentJob] = useState('');
+  const [desiredJob, setDesiredJob] = useState('');
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    onSearch(job);
+    onSearchCurrentJob(currentJob);
+    onSearchDesiredJob(desiredJob);
   };
 
   return (
     <form onSubmit={handleSubmit}>
-      <input type="text" value={job} onChange={(e) => setJob(e.target.value)} required />
-      <button type="submit">Search</button>
+      <TextField
+        label="Current Job"
+        value={currentJob}
+        onChange={(e) => setCurrentJob(e.target.value)}
+        required
+      />
+      <TextField
+        label="Desired Job"
+        value={desiredJob}
+        onChange={(e) => setDesiredJob(e.target.value)}
+        required
+      />
+      <Button type="submit" variant="contained" color="primary">
+        Search
+      </Button>
     </form>
   );
 };
