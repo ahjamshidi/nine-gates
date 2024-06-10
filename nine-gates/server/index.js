@@ -1,7 +1,7 @@
 const express = require('express');
-const jobController = require('./controllers/jobController');
 const cors = require('cors');
 const connectDB = require('./db');
+const routes = require('./routes/routes');
 
 // Connect to the MongoDB database
 connectDB();
@@ -9,10 +9,7 @@ connectDB();
 const app = express();
 
 app.use(cors());
-
-// Routes set up
-app.get('/currentJob/:jobTitle', jobController.getCurrentJob);
-app.get('/desiredJob/:jobTitle', jobController.getDesiredJob);
+app.use('/', routes)
 
 // Start the server
 const port = process.env.PORT || 5000;
