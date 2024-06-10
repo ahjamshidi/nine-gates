@@ -1,7 +1,7 @@
 import React from 'react';
 import '../styles/SkillsList.css'
 
-const MissingSkills = ({ currentSkills, desiredSkills }) => {
+const MissingSkills = ({ currentSkills, desiredSkills, onSkillClick }) => {
   const missingSkills = desiredSkills.filter(skill => !currentSkills.includes(skill));
 
   return (
@@ -9,7 +9,7 @@ const MissingSkills = ({ currentSkills, desiredSkills }) => {
       <div>
         <ul>
           {missingSkills.map((skill, index) => (
-            <li key={index} style={{ '--i': index }}>{skill}</li>
+            <li key={index} style={{ '--i': index }} onClick={() => onSkillClick(skill)}>{skill}</li>
           ))}
         </ul>
       </div>

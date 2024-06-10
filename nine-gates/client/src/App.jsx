@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { fetchJobSkills } from './helpers/api';
+import { fetchSkillDescription } from './helpers/api';
 import JobForm from './components/JobForm'
 import MissingSkills from './components/MissingSkills'
 import './App.css'
@@ -8,6 +9,7 @@ import Header from './components/Header'
 const App = () => {
   const [currentJobSkills, setCurrentJobSkills] = useState([]);
   const [desiredJobSkills, setDesiredJobSkills] = useState([]);
+  const [selectedSkillDescription, setSelectedSkillDescription] = useState(null); // New addition
   const [error, setError] = useState(null);
 
   const handleFetchCurrentJobSkills = async (currentJob) => {
@@ -45,6 +47,17 @@ const App = () => {
     return commonSkills.length;
   };
 
+  // Adding new functionality
+  const handleSkillClick = async (skill) => {
+  try {
+    const description = await fetchSkillDescription(skill);
+    setSelectedSkillDescription(description);
+  } catch (err) {
+    console.error(err);
+    setError('CANT GET the skill description.');
+  }
+};
+
   return (
     <div className="App">
       <Header />
@@ -58,8 +71,13 @@ const App = () => {
       </div>
     )}
       <div className="skills-lists">
-        <MissingSkills currentSkills={currentJobSkills} desiredSkills={desiredJobSkills} />
+        <MissingSkills currentSkills={currentJobSkills} desiredSkills={desiredJobSkills} onSkillClick={handleSkillClick} />
       </div>
+      {selectedSkillDescription && (
+        <div className="skill-description-modal">
+          {selectedSkillDescription}
+        </div>
+      )}
     </div>
   );
 };
