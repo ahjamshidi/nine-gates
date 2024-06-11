@@ -7,7 +7,7 @@ import Link from '@mui/material/Link';
 import Stack from '@mui/material/Stack';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
-
+import logo from '../styles/assets/logo.png'
 import FacebookIcon from '@mui/icons-material/GitHub';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import TwitterIcon from '@mui/icons-material/X';
@@ -58,9 +58,7 @@ export default function Footer() {
           <Box sx={{ width: { xs: '100%', sm: '60%' } }}>
             <Box sx={{ ml: '-15px' }}>
               <img
-                src={
-                  'https://assets-global.website-files.com/61ed56ae9da9fd7e0ef0a967/61f12e6faf73568658154dae_SitemarkDefault.svg'
-                }
+                src={logo}
                 style={logoStyle}
                 alt="logo of sitemark"
               />
@@ -69,7 +67,7 @@ export default function Footer() {
               Newsletter
             </Typography>
             <Typography variant="body2" color="text.secondary" mb={2}>
-              Subscribe to our newsletter for weekly updates and promotions.
+              Subscribe to future releases to explore future careers.
             </Typography>
             <Stack direction="row" spacing={1} useFlexGap>
               <TextField
@@ -98,7 +96,7 @@ export default function Footer() {
             gap: 1,
           }}
         >
-          <Typography variant="body2" fontWeight={600}>
+          {/* <Typography variant="body2" fontWeight={600}>
             Product
           </Typography>
           <Link color="text.secondary" href="#">
@@ -115,7 +113,7 @@ export default function Footer() {
           </Link>
           <Link color="text.secondary" href="#">
             FAQs
-          </Link>
+          </Link> */}
         </Box>
         <Box
           sx={{
@@ -124,7 +122,7 @@ export default function Footer() {
             gap: 1,
           }}
         >
-          <Typography variant="body2" fontWeight={600}>
+          {/* <Typography variant="body2" fontWeight={600}>
             Company
           </Typography>
           <Link color="text.secondary" href="#">
@@ -135,7 +133,7 @@ export default function Footer() {
           </Link>
           <Link color="text.secondary" href="#">
             Press
-          </Link>
+          </Link> */}
         </Box>
         <Box
           sx={{
@@ -144,7 +142,7 @@ export default function Footer() {
             gap: 1,
           }}
         >
-          <Typography variant="body2" fontWeight={600}>
+          {/* <Typography variant="body2" fontWeight={600}>
             Legal
           </Typography>
           <Link color="text.secondary" href="#">
@@ -155,7 +153,7 @@ export default function Footer() {
           </Link>
           <Link color="text.secondary" href="#">
             Contact
-          </Link>
+          </Link> */}
         </Box>
       </Box>
       <Box
@@ -178,7 +176,7 @@ export default function Footer() {
           <Link color="text.secondary" href="#">
             Terms of Service
           </Link>
-          <Copyright />
+          {/* <Copyright /> */}
         </div>
         <Stack
           direction="row"
