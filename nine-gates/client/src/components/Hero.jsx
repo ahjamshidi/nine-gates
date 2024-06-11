@@ -44,7 +44,7 @@ export default function Hero() {
               fontSize: 'clamp(3.5rem, 10vw, 4rem)',
             }}
           >
-            Find the skills you need based on the skills{" "}
+            Find the skills you need based on the skills that{" "}
              <Typography
               component="span"
               sx={{
@@ -53,7 +53,7 @@ export default function Hero() {
                   theme.palette.mode === 'light' ? 'primary.main' : 'primary.light',
               }}
             >
-                you have
+                 you have
             </Typography>
           </Typography>
           <Typography
