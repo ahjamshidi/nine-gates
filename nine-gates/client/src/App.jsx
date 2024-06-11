@@ -4,7 +4,6 @@ import { fetchSkillDescription } from "./helpers/api";
 import JobForm from "./components/JobForm";
 import MissingSkills from "./components/MissingSkills";
 import "./App.css";
-import Header from "./components/Header";
 import Dialog from "@mui/material/Dialog";
 import DialogTitle from "@mui/material/DialogTitle";
 import DialogContent from "@mui/material/DialogContent";
@@ -66,7 +65,6 @@ const App = () => {
 
   return (
     <div className="App">
-      <Header />
       <div>
         <JobForm
           onSearchCurrentJob={handleFetchCurrentJobSkills}
