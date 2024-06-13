@@ -4,12 +4,13 @@ import Divider from '@mui/material/Divider';
 import Hero from './components/Hero';
 import FAQ from './components/FAQ';
 import Footer from './components/Footer';
+import { useEffect } from 'react';
 
 
 export default function LandingPage() {
-  
-  //TODO: move them provider to main page
-  //TODO: move them AppAppBar to main page
+  useEffect(() => {
+    document.title = "Nine Gate"
+ }, []);
   return (
     <>
       <Hero />

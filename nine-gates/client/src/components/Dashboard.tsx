@@ -9,7 +9,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 import DialogContent from '@mui/material/DialogContent';
 import { Skill } from '../types/types';
 
-const App = () => {
+const Dashboard = () => {
   const [currentJobSkills, setCurrentJobSkills] = useState<string[]>([]);
   const [desiredJobSkills, setDesiredJobSkills] = useState<string[]>([]);
   const [selectedSkill, setSelectedSkill] = useState<Skill|null>(null); // New addition
@@ -81,4 +81,4 @@ const App = () => {
   );
 };
 
-export default App;
+export default Dashboard;

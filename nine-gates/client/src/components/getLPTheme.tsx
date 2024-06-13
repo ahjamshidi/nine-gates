@@ -1,5 +1,6 @@
-import { alpha } from '@mui/material/styles';
+import { alpha, Theme } from '@mui/material/styles';
 import { red } from '@mui/material/colors';
+import { PaletteMode } from '@mui/material';
 
 export const brand = {
   50: '#F0F7FF',
@@ -53,7 +54,7 @@ export const green = {
   900: '#021D02',
 };
 
-const getDesignTokens = (mode) => ({
+const getDesignTokens = (mode: PaletteMode) => ({
   palette: {
     mode,
     primary: {
@@ -87,7 +88,11 @@ const getDesignTokens = (mode) => ({
       light: red[50],
       main: red[500],
       dark: red[700],
-      ...(mode === 'dark' && { light: '#D32F2F', main: '#D32F2F', dark: '#B22A2A' }),
+      ...(mode === 'dark' && {
+        light: '#D32F2F',
+        main: '#D32F2F',
+        dark: '#B22A2A',
+      }),
     },
     success: {
       light: green[300],
@@ -179,7 +184,7 @@ const getDesignTokens = (mode) => ({
   },
 });
 
-export default function getLPTheme(mode) {
+export default function getLPTheme(mode: PaletteMode) {
   return {
     ...getDesignTokens(mode),
     components: {
@@ -189,7 +194,7 @@ export default function getLPTheme(mode) {
           disableGutters: true,
         },
         styleOverrides: {
-          root: ({ theme }) => ({
+          root: ({ theme }: { theme: Theme }) => ({
             padding: 8,
             overflow: 'clip',
             backgroundColor: '#fff',
@@ -215,7 +220,7 @@ export default function getLPTheme(mode) {
       },
       MuiAccordionSummary: {
         styleOverrides: {
-          root: ({ theme }) => ({
+          root: ({ theme }: { theme: Theme }) => ({
             border: 'none',
             borderRadius: 8,
             '&:hover': { backgroundColor: gray[100] },
@@ -232,7 +237,7 @@ export default function getLPTheme(mode) {
       },
       MuiToggleButtonGroup: {
         styleOverrides: {
-          root: ({ theme }) => ({
+          root: ({ theme }: { theme: Theme }) => ({
             borderRadius: '10px',
             boxShadow: `0 4px 16px ${alpha(gray[400], 0.2)}`,
             '& .Mui-selected': {
@@ -249,7 +254,7 @@ export default function getLPTheme(mode) {
       },
       MuiToggleButton: {
         styleOverrides: {
-          root: ({ theme }) => ({
+          root: ({ theme }: { theme: Theme }) => ({
             padding: '12px 16px',
             textTransform: 'none',
             borderRadius: '10px',
@@ -280,7 +285,7 @@ export default function getLPTheme(mode) {
       },
       MuiButton: {
         styleOverrides: {
-          root: ({ theme, ownerState }) => ({
+          root: ({ theme, ownerState }: { theme: Theme; ownerState: any }) => ({
             boxSizing: 'border-box',
             boxShadow: 'none',
             borderRadius: '10px',
@@ -346,7 +351,7 @@ export default function getLPTheme(mode) {
       },
       MuiCard: {
         styleOverrides: {
-          root: ({ theme, ownerState }) => ({
+          root: ({ theme, ownerState }: { theme: Theme; ownerState: any }) => ({
             backgroundColor: gray[50],
             borderRadius: 10,
             border: `1px solid ${alpha(gray[200], 0.8)}`,
@@ -365,7 +370,7 @@ export default function getLPTheme(mode) {
               ...(ownerState.variant === 'outlined' && {
                 background: `linear-gradient(to bottom, ${gray[900]}, ${alpha(
                   gray[800],
-                  0.5,
+                  0.5
                 )})`,
                 '&:hover': {
                   borderColor: brand[700],
@@ -378,7 +383,7 @@ export default function getLPTheme(mode) {
       },
       MuiChip: {
         styleOverrides: {
-          root: ({ theme }) => ({
+          root: ({ theme }: { theme: Theme }) => ({
             alignSelf: 'center',
             py: 1.5,
             px: 0.5,
@@ -421,7 +426,7 @@ export default function getLPTheme(mode) {
       },
       MuiDivider: {
         styleOverrides: {
-          root: ({ theme }) => ({
+          root: ({ theme }: { theme: Theme }) => ({
             borderColor: `${alpha(gray[200], 0.8)}`,
             ...(theme.palette.mode === 'dark' && {
               borderColor: `${alpha(gray[700], 0.4)}`,
@@ -434,7 +439,7 @@ export default function getLPTheme(mode) {
           underline: 'none',
         },
         styleOverrides: {
-          root: ({ theme }) => ({
+          root: ({ theme }: { theme: Theme }) => ({
             color: brand[600],
             fontWeight: 500,
             position: 'relative',
@@ -462,7 +467,7 @@ export default function getLPTheme(mode) {
       },
       MuiMenuItem: {
         styleOverrides: {
-          root: ({ theme }) => ({
+          root: ({ theme }: { theme: Theme }) => ({
             borderRadius: '99px',
             color: gray[500],
             fontWeight: 500,
@@ -474,7 +479,7 @@ export default function getLPTheme(mode) {
       },
       MuiPaper: {
         styleOverrides: {
-          root: ({ theme }) => ({
+          root: ({ theme }: { theme: Theme }) => ({
             backgroundImage: 'none',
             backgroundColor: gray[100],
             ...(theme.palette.mode === 'dark' && {
@@ -485,7 +490,7 @@ export default function getLPTheme(mode) {
       },
       MuiSwitch: {
         styleOverrides: {
-          root: ({ theme }) => ({
+          root: ({ theme }: { theme: Theme }) => ({
             boxSizing: 'border-box',
             width: 36,
             height: 24,
@@ -548,7 +553,7 @@ export default function getLPTheme(mode) {
       },
       MuiTextField: {
         styleOverrides: {
-          root: ({ theme }) => ({
+          root: ({ theme }: { theme: Theme }) => ({
             '& label .Mui-focused': {
               color: 'white',
             },

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { CssBaseline } from '@mui/material';
 import { ThemeOptions, ThemeProvider, createTheme } from '@mui/material/styles';
-import AppAppBar from './components/AppAppBar';
+import CustomAppBar from './components/CustomAppBar';
 import getLPTheme from './components/getLPTheme';
 import { PaletteMode } from '@mui/material';
 import LandingPage from './LandingPage';
@@ -19,7 +19,7 @@ export default function App() {
   return (
     <ThemeProvider theme={showCustomTheme ? LPtheme : defaultTheme}>
       <CssBaseline />
-      <AppAppBar mode={mode} toggleColorMode={toggleColorMode} />
+      <CustomAppBar mode={mode} toggleColorMode={toggleColorMode} />
       <Routes>
         <Route path="/" element={<LandingPage />} />
       </Routes>
