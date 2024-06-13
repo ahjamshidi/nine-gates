@@ -19,7 +19,7 @@ const App = () => {
 
 
 
-  const handleFetchCurrentJobSkills = async (currentJob) => {
+  const handleFetchCurrentJobSkills = async (currentJob:string) => {
     try {
       const skills = await fetchJobSkills("currentJob", currentJob);
       if (Array.isArray(skills)) {
