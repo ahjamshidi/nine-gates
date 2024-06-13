@@ -21,7 +21,8 @@ export default function LandingPage() {
   const toggleColorMode = () => {
     setMode((prev) => (prev === 'dark' ? 'light' : 'dark'));
   };
-
+//TODO: move them provider to main page
+//TODO: move them AppAppBar to main page
   return (
     <ThemeProvider theme={showCustomTheme ? LPtheme : defaultTheme}>
       <CssBaseline />
