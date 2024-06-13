@@ -1,14 +1,19 @@
-const axios = require('axios');
-const Skill = require('../models/Skill');
-
-exports.getSkillDescription = async (req, res) => {
+import { Request, Response } from 'express';
+import axios from 'axios';
+import Skill from '../models/skill';
+const getSkillDescription = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
   const { skillTitle } = req.params;
   try {
-    let skill = await Skill.findOne({ skillTitle: skillTitle });
+    let skill = await Skill.findOne({ skillTitle });
     if (!skill) {
       // If the skill is not found in the database, fetch it from the API
       const response = await axios.get(
-        `https://ec.europa.eu/esco/api/search?language=en&type=skill&text=${encodeURIComponent(skillTitle)}`
+        `https://ec.europa.eu/esco/api/search?language=en&type=skill&text=${encodeURIComponent(
+          skillTitle
+        )}`
       );
       const results = response.data._embedded.results;
       const firstUri = results.length > 0 ? results[0].uri : null;
@@ -19,7 +24,7 @@ exports.getSkillDescription = async (req, res) => {
           `https://ec.europa.eu/esco/api/resource/skill?uris=${encodedUri}&language=en`
         );
         const skillData = skillResponse.data._embedded[firstUri];
-        const description = skillData.description["en-us"].literal;
+        const description = skillData.description['en-us'].literal;
 
         // Check if a skill with the same uri already exists
         skill = await Skill.findOne({ uri: firstUri });
@@ -30,18 +35,21 @@ exports.getSkillDescription = async (req, res) => {
         } else {
           // If the skill does not exist, create a new skill
           skill = new Skill({
-            skillTitle: skillTitle,
+            skillTitle,
             uri: firstUri,
-            description: description,
+            description,
           });
         }
         await skill.save();
       } else {
-        return res.status(404).json({ error: 'Skill not found' });
+        res.status(404).json({ error: 'Skill not found' });
+        return;
       }
     }
     res.json({ description: skill.description });
-  } catch (error) {
+  } catch (error: any) {
     res.status(500).json({ error: error.toString() });
   }
 };
+
+export { getSkillDescription };
