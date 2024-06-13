@@ -13,7 +13,7 @@ const JobForm = ({ onSearchCurrentJob, onSearchDesiredJob }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} className='form'>
       <TextField
         label="Current Job"
         value={currentJob}
@@ -28,8 +28,8 @@ const JobForm = ({ onSearchCurrentJob, onSearchDesiredJob }) => {
         onChange={(e) => setDesiredJob(e.target.value)}
         required
       />
-      <Button type="submit" variant="contained" color="primary">
-        Search
+      <Button type="submit" variant="contained" color="primary" className="button-form">
+        Search Skills
       </Button>
     </form>
   );

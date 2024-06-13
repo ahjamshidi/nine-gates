@@ -1,4 +1,10 @@
+
 .input-form:not(:last-child) {
   margin-right: 2rem;
-  
-}
+  padding: 2px;
+  }
+
+  .form{
+    margin-top: 2rem;
+
+  }
