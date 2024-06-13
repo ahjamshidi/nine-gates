@@ -1,8 +1,8 @@
-const axios = require("axios");
-const Job = require("../models/Job");
-const Skill = require("../models/Skill");
+import axios from 'axios';
+import Job from '../models/job';
+import Skill from '../models/skill';
 
-async function fetchJobSkills(job) {
+async function fetchJobSkills(job: string): Promise<string[]> {
   const response = await axios.get(
     `https://ec.europa.eu/esco/api/search?language=en&type=occupation&text=${job}`
   );
@@ -17,12 +17,12 @@ async function fetchJobSkills(job) {
     );
     const occupationData = skillsResponse.data._embedded[firstUri];
     const skills = occupationData._links.hasEssentialSkill;
-    const skillTitles = skills.map((skill) => skill.title);
-    const skillUris = skills.map((skill) => skill.uri);
+    const skillTitles = skills.map((skill: { title: string }) => skill.title);
+    const skillUris = skills.map((skill: { uri: string }) => skill.uri);
 
     // Amir's implementation of injecting, into the Skill List of the Job Object, the description coming from the API Skills call
     for (let i = 0; i < skills.length; i++) {
-      skills[i]["desc"] = await fetchSkillDescription(skills[i].uri);
+      skills[i]['desc'] = await fetchSkillDescription(skills[i].uri);
     }
 
     // Save the job data to the database
@@ -41,11 +41,11 @@ async function fetchJobSkills(job) {
 
     return skillTitles;
   } else {
-    throw new Error("No occupations found for the given job.");
+    throw new Error('No occupations found for the given job.');
   }
 }
 
-async function fetchSkillDescription(skillUri) {
+async function fetchSkillDescription(skillUri: string): Promise<string> {
   // Check if the skill is already in the database
   const skill = await Skill.findOne({ uri: skillUri });
   if (skill) {
@@ -57,7 +57,7 @@ async function fetchSkillDescription(skillUri) {
       `https://ec.europa.eu/esco/api/resource/skill?uris=${encodedUri}&language=en`
     );
     const skillData = response.data._embedded[skillUri];
-    const description = skillData.description["en-us"].literal;
+    const description = skillData.description['en-us'].literal;
     const skillTitle = skillData.title;
 
     // Save the skill data to the database
@@ -72,6 +72,4 @@ async function fetchSkillDescription(skillUri) {
   }
 }
 
-module.exports = fetchSkillDescription;
-
-module.exports = fetchJobSkills;
+export { fetchJobSkills, fetchSkillDescription };
