@@ -1,8 +1,10 @@
 import Occupation, { IOccupation } from '../models/occupation';
 import Skill, { ISkill } from '../models/skill';
+
 class OccupationService {
   async searchOccupationByTitle(searchQuery: string): Promise<IOccupation[]> {
-    const regex = new RegExp(searchQuery, 'i'); // Case-insensitive search
+    const escapedQuery = searchQuery.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    const regex = new RegExp(escapedQuery, 'i');
 
     const results = await Occupation.find({
       $or: [
