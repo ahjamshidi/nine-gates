@@ -13,6 +13,8 @@ pids
 # Dependency directories
 node_modules
 dist
+db
+
 .env
 # Optional npm cache directory
 .npm
