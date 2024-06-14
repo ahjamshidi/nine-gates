@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
+import React, { FormEvent, useState } from 'react';
 import { TextField, Button } from '@mui/material';
 import '../styles/JobForm.css';
-
-const JobForm = ({ onSearchCurrentJob, onSearchDesiredJob }) => {
+// todo fix prop type
+const JobForm = ({ onSearchCurrentJob, onSearchDesiredJob }:{onSearchCurrentJob:any, onSearchDesiredJob:any}) => {
   const [currentJob, setCurrentJob] = useState('');
   const [desiredJob, setDesiredJob] = useState('');
 
-  const handleSubmit = (event) => {
+  const handleSubmit = (event:FormEvent) => {
     event.preventDefault();
     onSearchCurrentJob(currentJob);
     onSearchDesiredJob(desiredJob);

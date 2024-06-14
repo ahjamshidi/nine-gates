@@ -96,24 +96,6 @@ export default function Footer() {
             gap: 1,
           }}
         >
-          {/* <Typography variant="body2" fontWeight={600}>
-            Product
-          </Typography>
-          <Link color="text.secondary" href="#">
-            Features
-          </Link>
-          <Link color="text.secondary" href="#">
-            Testimonials
-          </Link>
-          <Link color="text.secondary" href="#">
-            Highlights
-          </Link>
-          <Link color="text.secondary" href="#">
-            Pricing
-          </Link>
-          <Link color="text.secondary" href="#">
-            FAQs
-          </Link> */}
         </Box>
         <Box
           sx={{
@@ -122,18 +104,6 @@ export default function Footer() {
             gap: 1,
           }}
         >
-          {/* <Typography variant="body2" fontWeight={600}>
-            Company
-          </Typography>
-          <Link color="text.secondary" href="#">
-            About us
-          </Link>
-          <Link color="text.secondary" href="#">
-            Careers
-          </Link>
-          <Link color="text.secondary" href="#">
-            Press
-          </Link> */}
         </Box>
         <Box
           sx={{
@@ -142,18 +112,6 @@ export default function Footer() {
             gap: 1,
           }}
         >
-          {/* <Typography variant="body2" fontWeight={600}>
-            Legal
-          </Typography>
-          <Link color="text.secondary" href="#">
-            Terms
-          </Link>
-          <Link color="text.secondary" href="#">
-            Privacy
-          </Link>
-          <Link color="text.secondary" href="#">
-            Contact
-          </Link> */}
         </Box>
       </Box>
       <Box
@@ -176,7 +134,6 @@ export default function Footer() {
           <Link color="text.secondary" href="#">
             Terms of Service
           </Link>
-          {/* <Copyright /> */}
         </div>
         <Stack
           direction="row"
