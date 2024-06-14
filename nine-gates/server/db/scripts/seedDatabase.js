@@ -1,14 +1,10 @@
 const axios = require('axios');
 const mongoose = require('mongoose');
-const dotenv = require('dotenv');
-
-// Load environment variables
-dotenv.config();
 
 // MongoDB connection
-const dbUri = process.env.DATABASE_URI;
+const dbUri = null; // substitute by the db connection string
 if (!dbUri) {
-  dbUri = 
+  throw new Error('DATABASE_URI environment variable is not defined');
 }
 
 // MongoDB connection
