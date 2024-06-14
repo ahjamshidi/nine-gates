@@ -11,14 +11,14 @@ mongoose.connect(
 );
 
 const skillSchema = new mongoose.Schema({
-  title: { type: String, required: true },
+  title: { type: String, required: true, unique: true },
   uri: { type: String, required: true, unique: true },
   skillType: String,
   description: String,
 });
 
 const occupationSchema = new mongoose.Schema({
-  title: { type: String, required: true },
+  title: { type: String, required: true, unique: true },
   uri: { type: String, required: true, unique: true },
   description: String,
   preferredLabel: String,
