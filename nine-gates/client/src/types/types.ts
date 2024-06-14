@@ -1,4 +1,6 @@
 export interface Skill {
-  name: string;
+  title: string;
   description: string;
+  skillType?: string;
+  uri?: string;
 }

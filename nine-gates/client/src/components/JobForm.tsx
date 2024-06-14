@@ -2,18 +2,17 @@ import React, { FormEvent, useState } from 'react';
 import { TextField, Button } from '@mui/material';
 import '../styles/JobForm.css';
 // todo fix prop type
-const JobForm = ({ onSearchCurrentJob, onSearchDesiredJob }:{onSearchCurrentJob:any, onSearchDesiredJob:any}) => {
+const JobForm = ({ formSubmitHandler }: { formSubmitHandler: (currentJob: string, desiredJob: string) => void }) => {
   const [currentJob, setCurrentJob] = useState('');
   const [desiredJob, setDesiredJob] = useState('');
 
-  const handleSubmit = (event:FormEvent) => {
+  const handleSubmit = (event: FormEvent) => {
     event.preventDefault();
-    onSearchCurrentJob(currentJob);
-    onSearchDesiredJob(desiredJob);
+    formSubmitHandler(currentJob, desiredJob);
   };
 
   return (
-    <form onSubmit={handleSubmit} className='form'>
+    <form onSubmit={handleSubmit} className="form">
       <TextField
         label="Current Job"
         value={currentJob}
@@ -28,7 +27,12 @@ const JobForm = ({ onSearchCurrentJob, onSearchDesiredJob }:{onSearchCurrentJob:
         onChange={(e) => setDesiredJob(e.target.value)}
         required
       />
-      <Button type="submit" variant="contained" color="primary" className="button-form">
+      <Button
+        type="submit"
+        variant="contained"
+        color="primary"
+        className="button-form"
+      >
         Search Skills
       </Button>
     </form>
