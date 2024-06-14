@@ -1,6 +1,20 @@
 import Occupation, { IOccupation } from '../models/occupation';
 import Skill, { ISkill } from '../models/skill';
 class OccupationService {
+  async searchOccupationByTitle(searchQuery: string): Promise<IOccupation[]> {
+    const regex = new RegExp(searchQuery, 'i'); // Case-insensitive search
+
+    const results = await Occupation.find({
+      $or: [
+        { title: regex },
+        { preferredLabel: regex },
+        { alternativeLabel: { $elemMatch: { $regex: regex } } },
+      ],
+    }).select('_id title preferredLabel alternativeLabel');
+
+    return results;
+  }
+
   async findMissingSkills(
     currentOccupationTitle: string,
     desiredOccupationTitle: string
@@ -50,6 +64,8 @@ class OccupationService {
       missingOptionalSkills,
     };
   }
+
+  async getOccupationTitles(searchQuery: string) {}
 }
 
 export default new OccupationService();

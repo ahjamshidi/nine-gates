@@ -1,14 +1,21 @@
 const axios = require('axios');
 const mongoose = require('mongoose');
+const dotenv = require('dotenv');
+
+// Load environment variables
+dotenv.config();
 
 // MongoDB connection
-mongoose.connect(
-  'mongodb://root:root@127.0.0.1:27017/jobSkillsDB?authSource=admin',
-  {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  }
-);
+const dbUri = process.env.DATABASE_URI;
+if (!dbUri) {
+  dbUri = 
+}
+
+// MongoDB connection
+mongoose.connect(dbUri, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
 
 const skillSchema = new mongoose.Schema({
   title: { type: String, required: true, unique: true },
@@ -90,8 +97,6 @@ async function fetchOccupations() {
             optionalSkills: optionalSkillRefs,
           };
 
-          console.log('occupationData: ', occupationData);
-
           // Save to MongoDB
           await Occupation.updateOne(
             { uri: occupation.uri },
@@ -101,9 +106,6 @@ async function fetchOccupations() {
 
           console.log('Occupation saved:', {
             title: occupationData.title,
-            uri: occupationData.uri,
-            essentialSkills: occupationData.essentialSkills,
-            optionalSkills: occupationData.optionalSkills,
           });
         }
 
@@ -124,7 +126,6 @@ async function fetchOccupations() {
   }
 
   console.log('Seeding completed!');
-  mongoose.connection.close();
 }
 
 // Fetch skills for an occupation
@@ -157,8 +158,44 @@ async function fetchSkills(occupation) {
   return { essentialSkills, optionalSkills };
 }
 
-// Run the seeding script
-fetchOccupations().catch((error) => {
-  console.error('Error during seeding:', error);
-  mongoose.connection.close();
-});
+// Fetch skill descriptions from ESCO API
+async function updateSkillDescriptions() {
+  const skills = await Skill.find({ description: { $exists: false } });
+
+  for (const skill of skills) {
+    try {
+      const url = `https://ec.europa.eu/esco/api/resource/skill?uri=${encodeURIComponent(
+        skill.uri
+      )}&language=en`;
+      const response = await axios.get(url);
+
+      if (response.data) {
+        const description = response.data.description?.en?.literal;
+        await Skill.updateOne(
+          { uri: skill.uri },
+          { $set: { description: description } }
+        );
+        console.log('Skill description updated:', description);
+      }
+    } catch (error) {
+      console.error(
+        `Error fetching description for skill ${skill.uri}:`,
+        error
+      );
+    }
+  }
+
+  console.log('Skill descriptions update completed!');
+}
+
+// Run the seeding and update scripts
+(async () => {
+  try {
+    await fetchOccupations();
+    await updateSkillDescriptions();
+    mongoose.connection.close();
+  } catch (error) {
+    console.error('Error during seeding or updating:', error);
+    mongoose.connection.close();
+  }
+})();
