@@ -6,7 +6,9 @@ import occupationRoutes from './routes/occupation.routes';
 // Ensure models are imported
 import './models/skill';
 import './models/occupation';
+import dotenv from 'dotenv';
 
+dotenv.config();
 // Connect to the MongoDB database
 connectDB();
 

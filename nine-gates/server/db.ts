@@ -1,8 +1,9 @@
 import mongoose from 'mongoose';
-
+import dotenv from 'dotenv';
+dotenv.config();
 function connectDB(): void {
   mongoose
-    .connect('mongodb://root:root@127.0.0.1:27017/jobSkillsDB?authSource=admin')
+    .connect(process.env['DATABASE_URI'] || 'mongodb://root:root@localhost:27017/jobSkillsDB?authSource=admin')
     .then(() => console.log('Database connected successfully'))
     .catch((err) => console.error('Database connection error: ', err));
 }
