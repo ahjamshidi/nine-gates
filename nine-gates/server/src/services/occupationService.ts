@@ -12,7 +12,7 @@ class OccupationService {
         { preferredLabel: regex },
         { alternativeLabel: { $elemMatch: { $regex: regex } } },
       ],
-    }).select('_id title preferredLabel alternativeLabel');
+    }).select('_id title');
 
     return results;
   }
@@ -30,11 +30,10 @@ class OccupationService {
         { essentialSkills: { $in: skillIds } },
         { optionalSkills: { $in: skillIds } },
       ],
-    }).select('_id title preferredLabel alternativeLabel');
+    }).select('_id title');
 
     return results;
   }
-
   async findMissingSkills(
     currentOccupationTitle: string,
     desiredOccupationTitle: string
