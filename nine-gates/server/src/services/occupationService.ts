@@ -17,6 +17,24 @@ class OccupationService {
     return results;
   }
 
+  async searchOccupationBySkill(searchQuery: string): Promise<IOccupation[]> {
+    const escapedQuery = searchQuery.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    const regex = new RegExp(escapedQuery, 'i');
+
+    const skills = await Skill.find({ title: regex }).select('_id');
+
+    const skillIds = skills.map((skill) => skill._id);
+
+    const results = await Occupation.find({
+      $or: [
+        { essentialSkills: { $in: skillIds } },
+        { optionalSkills: { $in: skillIds } },
+      ],
+    }).select('_id title preferredLabel alternativeLabel');
+
+    return results;
+  }
+
   async findMissingSkills(
     currentOccupationTitle: string,
     desiredOccupationTitle: string
