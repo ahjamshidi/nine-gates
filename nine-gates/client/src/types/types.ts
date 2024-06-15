@@ -4,3 +4,9 @@ export interface Skill {
   skillType?: string;
   uri?: string;
 }
+export interface Occupaition {
+  alternativeLabel: string[];
+  preferredLabel: string;
+  title: string;
+  _id: string;
+}
