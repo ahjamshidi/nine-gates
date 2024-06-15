@@ -1,6 +1,5 @@
 import { useState } from 'react';
-import { fetchJobSkills } from '../helpers/api';
-import { fetchSkillDescription } from '../helpers/api';
+import { fetchMissingJobSkills } from '../helpers/api';
 import JobForm from './JobForm';
 import MissingSkills from './MissingSkills';
 import '../styles/Dashboard.css';
@@ -10,45 +9,26 @@ import DialogContent from '@mui/material/DialogContent';
 import { Skill } from '../types/types';
 
 const Dashboard = () => {
-  const [currentJobSkills, setCurrentJobSkills] = useState<string[]>([]);
-  const [desiredJobSkills, setDesiredJobSkills] = useState<string[]>([]);
-  const [selectedSkill, setSelectedSkill] = useState<Skill|null>(null); // New addition
+  const [missingSkillsList, setMissingSkillsList] = useState<Skill[]>([]);
+  const [selectedSkill, setSelectedSkill] = useState<Skill | null>(null); // New addition
   const [error, setError] = useState<string | null>(null);
 
-  const handleFetchCurrentJobSkills = async (currentJob: string) => {
-    try {
-      const skills = await fetchJobSkills('currentJob', currentJob);
-      if (Array.isArray(skills)) {
-        setCurrentJobSkills(skills);
-        setError(null);
-      } else {
-        setError('There are no skills matching your Job Title, sorry.');
-      }
-    } catch (err) {
-      setError('An error occurred while fetching skills.');
+  const getMissingSkills = async (currentJob: string, desiredJob: string) => {
+    const skills = await fetchMissingJobSkills(currentJob, desiredJob);
+    if (skills.data?.missingEssentialSkills.length > 0) {
+      setMissingSkillsList(skills.data.missingEssentialSkills);
+      setError(null);
+    } else {
+      setError(skills);
     }
   };
 
-  const handleFetchDesiredJobSkills = async (desiredJob: string) => {
+  const handleSkillClick = async (skill: string): Promise<void> => {
     try {
-      const skills = await fetchJobSkills('desiredJob', desiredJob);
-      if (Array.isArray(skills)) {
-        setDesiredJobSkills(skills);
-        setError(null);
-      } else {
-        setError('There are no skills matching your Job Title, sorry.');
-      }
-    } catch (err) {
-      setError('An error occurred while fetching skills.');
-    }
-  };
-
-
-  // Adding new functionality
-  const handleSkillClick = async (skill: string):Promise<void> => {
-    try {
-      const description = await fetchSkillDescription(skill);
-      setSelectedSkill({ name: skill, description }); // Set the selected skill object
+      const selectedSkillData = missingSkillsList.filter((el) => {
+        return el.title === skill && el;
+      });
+      if (selectedSkillData.length > 0) setSelectedSkill(selectedSkillData[0]);
     } catch (err) {
       console.error(err);
       setError('CANT GET the skill description.');
@@ -58,21 +38,17 @@ const Dashboard = () => {
   return (
     <div className="App">
       <div>
-        <JobForm
-          onSearchCurrentJob={handleFetchCurrentJobSkills}
-          onSearchDesiredJob={handleFetchDesiredJobSkills}
-        />
+        <JobForm formSubmitHandler={getMissingSkills} />
       </div>
       {error && <div className="error-message">{error}</div>}
       <div className="skills-lists">
         <MissingSkills
-          currentSkills={currentJobSkills}
-          desiredSkills={desiredJobSkills}
+          missingSkillsList={missingSkillsList}
           onSkillClick={handleSkillClick}
         />
       </div>
       <Dialog open={!!selectedSkill} onClose={() => setSelectedSkill(null)}>
-        <DialogTitle>{selectedSkill ? selectedSkill.name : ''}</DialogTitle>
+        <DialogTitle>{selectedSkill ? selectedSkill.title : ''}</DialogTitle>
         <DialogContent>
           {selectedSkill ? selectedSkill.description : ''}
         </DialogContent>
