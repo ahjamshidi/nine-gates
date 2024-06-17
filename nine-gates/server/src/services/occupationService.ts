@@ -1,9 +1,62 @@
+import { findIntersections, findNotIntersections } from '../libs/utils';
 import Occupation, { IOccupation } from '../models/occupation';
 import Skill, { ISkill } from '../models/skill';
 
 class OccupationService {
   escapeStringRegexp(string: string): string {
     return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); // Escape special characters for regex
+  }
+  async getOcuppationByIdWithSkills(occupationId: string): Promise<
+    IOccupation & {
+      essentialSkills: ISkill[];
+      optionalSkills: ISkill[];
+    }
+  > {
+    const occupation = (await Occupation.findById(occupationId.trim())
+      .populate<{ essentialSkills: ISkill[]; optionalSkills: ISkill[] }>(
+        'essentialSkills optionalSkills'
+      )
+      .exec()) as IOccupation & {
+      essentialSkills: ISkill[];
+      optionalSkills: ISkill[];
+    };
+    return occupation;
+  }
+  async compaireCurrentAndDesireJobs(
+    currentOccupationId: string,
+    desiredOccupationId: string
+  ) {
+    const currentOccupation = await this.getOcuppationByIdWithSkills(
+      currentOccupationId
+    );
+    const desiredOccupation = await this.getOcuppationByIdWithSkills(
+      desiredOccupationId
+    );
+
+    const commonEssentialSkills = findIntersections(
+      currentOccupation.essentialSkills,
+      desiredOccupation.essentialSkills
+    );
+    const missingEssentialSkills = findNotIntersections(
+      currentOccupation.essentialSkills,
+      desiredOccupation.essentialSkills
+    );
+    const commonOptionalSkills = findIntersections(
+      currentOccupation.optionalSkills,
+      desiredOccupation.optionalSkills
+    );
+    const missingOptionalSkills = findNotIntersections(
+      currentOccupation.optionalSkills,
+      desiredOccupation.optionalSkills
+    );
+    return {
+      currentOccupation,
+      desiredOccupation,
+      commonEssentialSkills,
+      missingEssentialSkills,
+      commonOptionalSkills,
+      missingOptionalSkills,
+    };
   }
   async searchOccupationByTitle(searchQuery: string): Promise<IOccupation[]> {
     const escapedQuery = this.escapeStringRegexp(searchQuery);
