@@ -83,8 +83,6 @@ class OccupationService {
       missingOptionalSkills,
     };
   }
-
-  async getOccupationTitles(searchQuery: string) {}
 }
 
 export default new OccupationService();
