@@ -4,8 +4,8 @@ import { IOccupation } from '@/models/occupation';
 
 class OccupationController {
   async compareDetails(req: Request, res: Response): Promise<Response> {
-    const { currentOccupationId, desiredOccupationId } = req.query;
-    if (!currentOccupationId || !desiredOccupationId) {
+    const { currentOccupationTitle, desiredOccupationTitle } = req.query;
+    if (!currentOccupationTitle || !currentOccupationTitle) {
       return res.status(400).json({
         data: {},
         message: 'Current and desired occupation Ids are required',
@@ -14,8 +14,8 @@ class OccupationController {
     }
     try {
       const results = await OccupationService.compaireCurrentAndDesireJobs(
-        currentOccupationId as string,
-        desiredOccupationId as string
+        currentOccupationTitle as string,
+        currentOccupationTitle as string
       );
 
       return res.status(200).json({

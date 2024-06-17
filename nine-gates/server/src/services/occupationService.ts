@@ -6,6 +6,22 @@ class OccupationService {
   escapeStringRegexp(string: string): string {
     return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); // Escape special characters for regex
   }
+  async getOcuppationByTitleWithSkills(occupationId: string): Promise<
+  IOccupation & {
+    essentialSkills: ISkill[];
+    optionalSkills: ISkill[];
+  }
+> {
+  const occupation = (await Occupation.findOne({title:occupationId.trim()})
+    .populate<{ essentialSkills: ISkill[]; optionalSkills: ISkill[] }>(
+      'essentialSkills optionalSkills'
+    )
+    .exec()) as IOccupation & {
+    essentialSkills: ISkill[];
+    optionalSkills: ISkill[];
+  };
+  return occupation;
+}
   async getOcuppationByIdWithSkills(occupationId: string): Promise<
     IOccupation & {
       essentialSkills: ISkill[];
@@ -23,14 +39,14 @@ class OccupationService {
     return occupation;
   }
   async compaireCurrentAndDesireJobs(
-    currentOccupationId: string,
-    desiredOccupationId: string
+    currentOccupationTitle: string,
+    desiredOccupationTitle: string
   ) {
-    const currentOccupation = await this.getOcuppationByIdWithSkills(
-      currentOccupationId
+    const currentOccupation = await this.getOcuppationByTitleWithSkills(
+      currentOccupationTitle
     );
-    const desiredOccupation = await this.getOcuppationByIdWithSkills(
-      desiredOccupationId
+    const desiredOccupation = await this.getOcuppationByTitleWithSkills(
+      desiredOccupationTitle
     );
 
     const commonEssentialSkills = findIntersections(
