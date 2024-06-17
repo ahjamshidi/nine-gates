@@ -1,8 +1,8 @@
 import React, { FormEvent, useState } from 'react';
 import { TextField, Button, Box } from '@mui/material';
 import Autocomplete from '@mui/material/Autocomplete';
-import '../styles/JobForm.css';
 import { searchOccupationsByTitle } from '../helpers/api';
+import '../styles/JobForm.css';
 // todo fix prop type
 const JobForm = ({
   formSubmitHandler,
@@ -11,7 +11,7 @@ const JobForm = ({
 }) => {
   const [currentJob, setCurrentJob] = useState('');
   const [desiredJob, setDesiredJob] = useState('');
-  const initval:string[]=[]
+  const initval: string[] = [];
   const [currentJobOptions, setCurrentJobOptions] = useState(initval);
   const [desiredJobOptions, setDesiredJobOptions] = useState(initval);
 
@@ -19,7 +19,10 @@ const JobForm = ({
     event.preventDefault();
     formSubmitHandler(currentJob, desiredJob);
   };
-  const getFilteredOccupation = async (newInputValue: string, stateSeter:React.Dispatch<React.SetStateAction<string[]>>) => {
+  const getFilteredOccupation = async (
+    newInputValue: string,
+    stateSeter: React.Dispatch<React.SetStateAction<string[]>>
+  ) => {
     const occupationsList = await searchOccupationsByTitle(newInputValue);
     stateSeter(occupationsList);
   };
