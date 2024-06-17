@@ -2,8 +2,11 @@ import Occupation, { IOccupation } from '../models/occupation';
 import Skill, { ISkill } from '../models/skill';
 
 class OccupationService {
+  escapeStringRegexp(string: string): string {
+    return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); // Escape special characters for regex
+  }
   async searchOccupationByTitle(searchQuery: string): Promise<IOccupation[]> {
-    const escapedQuery = searchQuery.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    const escapedQuery = this.escapeStringRegexp(searchQuery);
     const regex = new RegExp(escapedQuery, 'i');
 
     const results = await Occupation.find({
@@ -12,11 +15,28 @@ class OccupationService {
         { preferredLabel: regex },
         { alternativeLabel: { $elemMatch: { $regex: regex } } },
       ],
-    }).select('_id title preferredLabel alternativeLabel');
+    }).select('_id title');
 
     return results;
   }
 
+  async searchOccupationBySkill(searchQuery: string): Promise<IOccupation[]> {
+    const escapedQuery = this.escapeStringRegexp(searchQuery);
+    const regex = new RegExp(escapedQuery, 'i');
+
+    const skills = await Skill.find({ title: regex }).select('_id');
+
+    const skillIds = skills.map((skill) => skill._id);
+
+    const results = await Occupation.find({
+      $or: [
+        { essentialSkills: { $in: skillIds } },
+        { optionalSkills: { $in: skillIds } },
+      ],
+    }).select('_id title');
+
+    return results;
+  }
   async findMissingSkills(
     currentOccupationTitle: string,
     desiredOccupationTitle: string
@@ -66,8 +86,6 @@ class OccupationService {
       missingOptionalSkills,
     };
   }
-
-  async getOccupationTitles(searchQuery: string) {}
 }
 
 export default new OccupationService();
