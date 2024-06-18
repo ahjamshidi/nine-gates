@@ -15,8 +15,7 @@ const SkillsList = ({
         {skillsList.map((skill, index) => (
           <li
             key={index}
-            // style={{ '--i': index } as React.CSSProperties}
-            style={{ textAlign: 'left', display: 'block' }}
+            style={{ textAlign: 'center', display: 'block' }}
             onClick={() => onSkillClick(skill)}
           >
             {skill.title}
