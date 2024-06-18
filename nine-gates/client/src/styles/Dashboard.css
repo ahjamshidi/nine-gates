@@ -5,7 +5,24 @@
   text-align: center;
 }
 
- .skills-lists {
+.skills-lists {
   display: flex;
   justify-content: space-between;
+}
+
+table tr td:nth-child(even) {
+  border-left: 1px solid #ccc;
+}
+table tr td {
+  text-align: center !important;
+  vertical-align: baseline !important;
+ 
+}
+table ul li {
+  border: 1px solid #03a9f4;
+  width: 70%;
+}
+table ul {
+  padding: 0 !important;
+  margin: 0 !important;
 }

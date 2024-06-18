@@ -1,13 +1,30 @@
 import React from 'react';
-import '../styles/SkillsList.css'
+import '../styles/SkillsList.css';
+import { Skill } from '../types/types';
 
-const SkillsList = ({ skills }) => {
-  return (
-    <ul>
-      {skills.map((skill, index) => (
-        <li key={index} style={{ '--i': index + 1 }}>{skill}</li>
-      ))}
-    </ul>
+const SkillsList = ({
+  skillsList,
+  onSkillClick,
+}: {
+  skillsList: Skill[];
+  onSkillClick: (skill: Skill) => void;
+}) => {
+  return skillsList.length > 0 ? (
+    <div>
+      <ul>
+        {skillsList.map((skill, index) => (
+          <li
+            key={index}
+            style={{ textAlign: 'center', display: 'block' }}
+            onClick={() => onSkillClick(skill)}
+          >
+            {skill.title}
+          </li>
+        ))}
+      </ul>
+    </div>
+  ) : (
+    <div></div>
   );
 };
 
