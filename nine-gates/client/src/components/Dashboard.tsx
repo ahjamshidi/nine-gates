@@ -36,12 +36,12 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="App">
+    <div className='App'>
       <div>
         <JobForm formSubmitHandler={getMissingSkills} />
       </div>
-      {error && <div className="error-message">{error}</div>}
-      <div className="skills-lists">
+      {error && <div className='error-message'>{error}</div>}
+      <div className='skills-lists'>
         <MissingSkills
           missingSkillsList={missingSkillsList}
           onSkillClick={handleSkillClick}

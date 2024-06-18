@@ -5,6 +5,7 @@ import CustomAppBar from './components/CustomAppBar';
 import getLPTheme from './components/getLPTheme';
 import { PaletteMode } from '@mui/material';
 import LandingPage from './LandingPage';
+import HeroDetails from './components/HeroDetails';
 import { Routes, Route } from 'react-router-dom';
 export default function App() {
   const initPaletteMode: PaletteMode = 'light';
@@ -21,7 +22,8 @@ export default function App() {
       <CssBaseline />
       <CustomAppBar mode={mode} toggleColorMode={toggleColorMode} />
       <Routes>
-        <Route path="/" element={<LandingPage />} />
+        <Route path='/' element={<LandingPage />} />
+        <Route path='/hero-details' element={<HeroDetails />} />
       </Routes>
     </ThemeProvider>
   );

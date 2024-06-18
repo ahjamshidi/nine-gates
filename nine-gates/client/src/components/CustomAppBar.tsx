@@ -1,17 +1,20 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
 
-import Box from '@mui/material/Box';
-import AppBar from '@mui/material/AppBar';
-import Toolbar from '@mui/material/Toolbar';
-import Button from '@mui/material/Button';
-import Container from '@mui/material/Container';
-import Divider from '@mui/material/Divider';
-import Typography from '@mui/material/Typography';
-import MenuItem from '@mui/material/MenuItem';
-import Drawer from '@mui/material/Drawer';
+import {
+  Box,
+  AppBar,
+  Toolbar,
+  Button,
+  Container,
+  Divider,
+  Typography,
+  MenuItem,
+  Drawer,
+} from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 import ToggleColorMode from './ToggleColorMode';
-import logo from '../styles/assets/logo.png'
+import logo from '../styles/assets/logo.png';
 import { PaletteMode } from '@mui/material';
 
 const logoStyle = {
@@ -20,14 +23,25 @@ const logoStyle = {
   cursor: 'pointer',
 };
 
-function CustomAppBar({ mode, toggleColorMode }:{mode:PaletteMode,toggleColorMode:()=>void}) {
+function CustomAppBar({
+  mode,
+  toggleColorMode,
+}: {
+  mode: PaletteMode;
+  toggleColorMode: () => void;
+}) {
   const [open, setOpen] = React.useState<boolean | undefined>(false);
+  const navigate = useNavigate();
 
-  const toggleDrawer = (newOpen:boolean) => () => {
+  const toggleDrawer = (newOpen: boolean) => () => {
     setOpen(newOpen);
   };
 
-  const scrollToSection = (sectionId:string) => {
+  const handleLogoClick = () => {
+    navigate('/');
+  };
+
+  const scrollToSection = (sectionId: string) => {
     const sectionElement = document.getElementById(sectionId);
     const offset = 128;
     if (sectionElement) {
@@ -44,7 +58,7 @@ function CustomAppBar({ mode, toggleColorMode }:{mode:PaletteMode,toggleColorMod
   return (
     <div>
       <AppBar
-        position="fixed"
+        position='fixed'
         sx={{
           boxShadow: 0,
           bgcolor: 'transparent',
@@ -52,9 +66,9 @@ function CustomAppBar({ mode, toggleColorMode }:{mode:PaletteMode,toggleColorMod
           mt: 2,
         }}
       >
-        <Container maxWidth="lg">
+        <Container maxWidth='lg'>
           <Toolbar
-            variant="regular"
+            variant='regular'
             sx={(theme) => ({
               display: 'flex',
               alignItems: 'center',
@@ -85,17 +99,17 @@ function CustomAppBar({ mode, toggleColorMode }:{mode:PaletteMode,toggleColorMod
               }}
             >
               <img
-                src={
-                  logo}
+                src={logo}
                 style={logoStyle}
-                alt="logo of colored skills"
+                alt='logo of colored skills'
+                onClick={handleLogoClick}
               />
               <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
                 <MenuItem
                   onClick={() => scrollToSection('faq')}
                   sx={{ py: '6px', px: '12px' }}
                 >
-                  <Typography variant="body2" color="text.primary">
+                  <Typography variant='body2' color='text.primary'>
                     FAQ
                   </Typography>
                 </MenuItem>
@@ -109,7 +123,7 @@ function CustomAppBar({ mode, toggleColorMode }:{mode:PaletteMode,toggleColorMod
               }}
             >
               <ToggleColorMode mode={mode} toggleColorMode={toggleColorMode} />
-              <Drawer anchor="right" open={open} onClose={toggleDrawer(false)}>
+              <Drawer anchor='right' open={open} onClose={toggleDrawer(false)}>
                 <Box
                   sx={{
                     minWidth: '60dvw',
@@ -126,7 +140,10 @@ function CustomAppBar({ mode, toggleColorMode }:{mode:PaletteMode,toggleColorMod
                       flexGrow: 1,
                     }}
                   >
-                    <ToggleColorMode mode={mode} toggleColorMode={toggleColorMode} />
+                    <ToggleColorMode
+                      mode={mode}
+                      toggleColorMode={toggleColorMode}
+                    />
                   </Box>
                   <MenuItem onClick={() => scrollToSection('features')}>
                     Features
@@ -140,15 +157,17 @@ function CustomAppBar({ mode, toggleColorMode }:{mode:PaletteMode,toggleColorMod
                   <MenuItem onClick={() => scrollToSection('pricing')}>
                     Pricing
                   </MenuItem>
-                  <MenuItem onClick={() => scrollToSection('faq')}>FAQ</MenuItem>
+                  <MenuItem onClick={() => scrollToSection('faq')}>
+                    FAQ
+                  </MenuItem>
                   <Divider />
                   <MenuItem>
                     <Button
-                      color="primary"
-                      variant="contained"
-                      component="a"
-                      href="/material-ui/getting-started/templates/sign-up/"
-                      target="_blank"
+                      color='primary'
+                      variant='contained'
+                      component='a'
+                      href='/material-ui/getting-started/templates/sign-up/'
+                      target='_blank'
                       sx={{ width: '100%' }}
                     >
                       Sign up
@@ -156,11 +175,11 @@ function CustomAppBar({ mode, toggleColorMode }:{mode:PaletteMode,toggleColorMod
                   </MenuItem>
                   <MenuItem>
                     <Button
-                      color="primary"
-                      variant="outlined"
-                      component="a"
-                      href="/material-ui/getting-started/templates/sign-in/"
-                      target="_blank"
+                      color='primary'
+                      variant='outlined'
+                      component='a'
+                      href='/material-ui/getting-started/templates/sign-in/'
+                      target='_blank'
                       sx={{ width: '100%' }}
                     >
                       Sign in
